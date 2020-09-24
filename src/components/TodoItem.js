@@ -2,23 +2,46 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import TodoForm from './TodoForm';
 
 
-function Todo({todos, completeToDo, updateTodo, removeTodo}) {
+function Todo(props) {
 
     const [edit,setEdit] = useState({
         id: null,
         value: ''
     });
 
-    return todos.map((todo, index) => (
+    // const update = (id, text) => {
+    //     setEdit({id: id, value: text});
+    //     props.updateTodo(id, text);
+    // }
+
+    // value = props.obSubmit
+    const submitUpdate = (value) => {
+        // Khi submit form EDIT thì update qua Parent
+        props.updateTodo(edit.id, value);
+
+        // Sau đó reset edit
+        setEdit({
+            id: null,
+            value: ''
+        })
+    }
+
+    if (edit.id){
+        return <TodoForm onSubmit={submitUpdate}/>
+    }
+
+    console.log(props.todos);
+    return props.todos.map((todo, index) => (
         <div className={todo.isComplete ? 'todo_row complete' : 'todo_row'} key={index}>
-            <div key={todo.id} onClick={() => completeToDo(todo.id)}>
+            <div key={todo.id} onClick={() => props.completeToDo(todo.id)}>
                 {todo.text}
             </div>
             <div className="icons">
-                <FontAwesomeIcon icon={faEdit} onClick={() => updateTodo(todo.id)} className="edit_icon"/>
-                <FontAwesomeIcon icon={faTrashAlt} onClick={() => removeTodo(todo.id)} className="delete_icon"/>
+                <FontAwesomeIcon icon={faEdit} onClick={() => setEdit({id: todo.id, value: todo.text})} className="edit_icon"/>
+                <FontAwesomeIcon icon={faTrashAlt} onClick={() => props.removeTodo(todo.id)} className="delete_icon"/>
             </div>
         </div>
     ));

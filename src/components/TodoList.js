@@ -7,6 +7,7 @@ function TodoList() {
 
     const [todos, setTodos] = useState([])
 
+    // todo này chính là object onSubmit(id,name) từ TodoForm
     const addToDo = (todo) => {
         if (!todo.text || /^\s*$/.test(todo.text)){
             return;
@@ -20,11 +21,15 @@ function TodoList() {
         if (!newValue.text || /^\s*$/.test(newValue.text)){
             return;
         }
-        const editItem = [...todos].map(todo => todo.id === todoId ? newValue : todo)
+        // Update function
+        const editItem = [...todos].map(todo => todo.id === todoId ? newValue : todo);
+        setTodos(editItem);
 
     }
 
+    // Callback function của TodoList, nhận function từ TodoItem ** props.removeTodo(todo.id)
     const removeTodo = (id) => {
+        //Remove dùng filter
         const removeArr = [...todos].filter(todo => todo.id !== id);
         setTodos(removeArr);
     }
