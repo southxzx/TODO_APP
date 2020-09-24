@@ -36,10 +36,11 @@ function TodoList() {
 
     const completeToDo = (id) => {
         let updateToDo = todos.map(todo => {
-            if (todo.id = id){
+            if (todo.id === id){
                 todo.isComplete = !todo.isComplete;
             }
-        })
+            return todo;
+        });
         setTodos(updateToDo);
     }
 
