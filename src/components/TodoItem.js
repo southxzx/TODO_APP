@@ -30,12 +30,12 @@ function Todo(props) {
     }
 
     if (edit.id){
-        return <TodoForm onSubmit={submitUpdate}/>
+        return <TodoForm edit={edit} onSubmit={submitUpdate}/>
     }
 
     console.log(props.todos);
     return props.todos.map((todo, index) => (
-        <div className={todo.isComplete ? 'todo_row complete' : 'todo_row'} key={index}>
+        <div className={todo.isComplete ? 'todo_row complete' : 'todo_row'} onClick={() => props.completeToDo(todo.id)} key={index}>
             <div key={todo.id} onClick={() => props.completeToDo(todo.id)}>
                 {todo.text}
             </div>
